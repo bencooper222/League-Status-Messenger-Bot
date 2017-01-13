@@ -9,7 +9,7 @@ var key = 'b8d61b09-33c2-4b82-b0ea-a06e785e7bb8';
 */
 
 
-function requestSummonerId(summonerName, matchMethod) {
+function requestSummonerId(summonerName, matchMethod, bot, message) {
 
     var options = {
         host: 'na.api.pvp.net',
@@ -33,7 +33,13 @@ function requestSummonerId(summonerName, matchMethod) {
         response.on('end', function() {
             var data = JSON.parse(str);
             //   console.log(data);
-            matchMethod(data[summonerName.toLowerCase()].id);
+
+            if (Object.keys(data)[0] == "status") {
+                bot.reply(message, "Summoner not found.");
+            } else {
+                matchMethod(data[summonerName.toLowerCase()].id, bot, message);
+            }
+
 
         });
     }
@@ -42,7 +48,7 @@ function requestSummonerId(summonerName, matchMethod) {
 }
 
 
-var findMatch = function(id) {
+var findMatch = function(id, bot, message) {
 
     var options = {
         host: 'na.api.pvp.net',
@@ -66,7 +72,7 @@ var findMatch = function(id) {
         response.on('end', function() {
             var data = JSON.parse(str);
             //     console.log(data);
-            processGameData(data, id)
+            processGameData(data, id, bot, message)
 
         });
     }
@@ -74,23 +80,34 @@ var findMatch = function(id) {
     https.request(options, callback).end();
 }
 
-function processGameData(data, id) {
+function processGameData(data, id, bot, message) {
     if (Object.keys(data)[0] == "status") {
-        console.log("Summoner not playing");
+        if (message.text.toLowerCase() == "avol9") {
+            bot.reply(message, "Summoner not in game. Thank god.");
+        } else {
+            bot.reply(message, "Summoner not in game.");
+        }
     } else {
         //console.log(data);
-        console.log(getChamp(data, id));
+        console.log(getChamp(data, id, bot, message));
     }
 }
 
-function formatGameData(data, champ) {
-    console.log("They are in game and have been playing " + champ + " for " + Math.floor(data.gameLength / 60) +
-        ":" + data.gameLength % 60);
-    return "They are in game and have been playing " + champ + " for " + Math.floor(data.gameLength / 60) +
-        ":" + data.gameLength % 60 + "minutes:seconds"
+function formatGameData(data, champ, bot, message) {
+    if (message.text.toLowerCase() == "avol9") {
+        bot.reply(message, "They are in game and have been playing " + champ + " for " + Math.floor(data.gameLength / 60) +
+            ":" + data.gameLength % 60 + " minutes. Probably feeding because it's Avol.");
+    } else {
+        bot.reply(message, "They are in game and have been playing " + champ + " for " + Math.floor(data.gameLength / 60) +
+            ":" + data.gameLength % 60 + " minutes");
+    }
+
+
+
+
 }
 
-function getChamp(playerData, id) {
+function getChamp(playerData, id, bot, message) {
 
 
     var options = {
@@ -115,7 +132,7 @@ function getChamp(playerData, id) {
         response.on('end', function() {
             var data = JSON.parse(str);
 
-            formatGameData(playerData, data.name);
+            formatGameData(playerData, data.name, bot, message);
 
         });
     }
@@ -131,7 +148,6 @@ function searchForSummoner(participants, id) { // ez sequential search, returns 
         }
     }
 }
-
 
 
 

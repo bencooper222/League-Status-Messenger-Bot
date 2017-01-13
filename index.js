@@ -93,7 +93,7 @@ var fs = require('fs');
 // file is included here:
 eval(fs.readFileSync('riot_request.js') + '');
 
-requestSummonerId('NiWiDamen', findMatch);
+//requestSummonerId('avol9', findMatch);
 
 const ops = commandLineArgs([{
         name: 'lt',
@@ -183,7 +183,8 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
 
 
 controller.on('message_received', function(bot, message) {
-    bot.reply(message, 'Try: `what is my name` or `structured` or `call me captain`');
+    requestSummonerId(message.text, findMatch, bot, message);
+    // bot.reply(message, message.text + "hello");
     return false;
 });
 

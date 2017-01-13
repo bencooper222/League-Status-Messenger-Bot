@@ -84,3 +84,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 league_bot.pem
+apiKey.txt
+*.pem
