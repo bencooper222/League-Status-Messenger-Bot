@@ -85,8 +85,15 @@ var Botkit = require('botkit');
 var os = require('os');
 var commandLineArgs = require('command-line-args');
 var localtunnel = require('localtunnel');
-var http = require('http');
+var https = require('https');
 
+var fs = require('fs');
+
+
+// file is included here:
+eval(fs.readFileSync('riot_request.js') + '');
+
+requestSummonerId('NiWiDamen', findMatch);
 
 const ops = commandLineArgs([{
         name: 'lt',
