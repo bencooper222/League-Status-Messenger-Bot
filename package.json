@@ -1,0 +1,26 @@
+{
+  "name": "League-Status-Bot",
+  "version": "0.0.1",
+  "description": "Add league status into messenger.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "facebook-chat-api": "^1.4.0",
+    "leaguejs": "^1.8.0"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/welcome-project"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
+}
