@@ -1,3 +1,4 @@
+require('dotenv').config()
 const leaguejs = require('leaguejs');
 const api = new leaguejs(process.env.RIOT_API_KEY);
 const champions = require('./champions.json');
