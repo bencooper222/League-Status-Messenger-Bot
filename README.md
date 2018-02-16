@@ -10,7 +10,7 @@ FACEBOOK_PASSWORD=
 RIOT_API_KEY=
 LEAGUE_API_PLATFORM_ID=
 ```
-
+And then there's the usual:
 ```bash
 npm install //you know the drill
 
